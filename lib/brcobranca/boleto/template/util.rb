@@ -3,7 +3,7 @@ module Brcobranca
     module Template
       # Métodos auxiliares de montagem de template
       module Util
-        # Responsável por definir a logotipo usada no template genérico, 
+        # Responsável por definir a logotipo usada no template genérico,
         # retorna o caminho para o <b>logotipo</b> ou <b>false</b> caso nao consiga encontrar o logotipo.
         def monta_logo
           case self.class.to_s
@@ -19,6 +19,8 @@ module Brcobranca
             imagem = 'bradesco.jpg'
           when "BancoUnibanco"
             imagem = 'unibanco.jpg'
+          when "BancoBanespa"
+            image = 'banespa.jpg'
           else
             return false
           end
@@ -28,3 +30,4 @@ module Brcobranca
     end
   end
 end
+
