@@ -10,7 +10,10 @@
 
 Gem para emissão de bloquetos de cobrança para bancos brasileiros
 
-== Bancos Disponíveis 
+== Bancos Disponíveis
+
+* Banco Santander Banespa
+  * COB
 
 * Banco do Brasil
   * TODAS AS CARTEIRAS PRESENTES NA DOCUMENTAÇÃO
@@ -20,14 +23,14 @@ Gem para emissão de bloquetos de cobrança para bancos brasileiros
 
 * Banco HSBC
   * CNR
-  
+
 * Banco Real
   * Sem registro
   * Com registro
-  
+
 * Banco Bradesco
   * TODAS AS CARTEIRAS PRESENTES NA DOCUMENTAÇÃO
-  
+
 * Banco UNIBANCO
   * Sem registro
   * Com registro
@@ -70,3 +73,4 @@ BSD
 De brasileiro para brasileiros.
 
 Copyleft 2009 Kivanio Barbosa
+
