@@ -1,10 +1,10 @@
 begin
-  require 'rghost' 
+  require 'rghost'
 rescue LoadError
   puts 'Por favor execute `sudo gem install rghost` para usar o brcobranca'
 end
 begin
-  require 'rghost_barcode' 
+  require 'rghost_barcode'
 rescue LoadError
   puts 'Por favor execute `sudo gem install rghost_barcode` para usar o brcobranca'
 end
@@ -15,13 +15,13 @@ module Brcobranca
       # Templates para usar com Rghost
       module Rghost
         include RGhost unless self.include?(RGhost)
-        
+
         # Gera o boleto em usando o formato desejado [:pdf, :jpg, :tif, :png, :ps, :laserjet, ... etc]
         #  Veja mais formatos na documentação do rghost: http://wiki.github.com/shairontoledo/rghost/supported-devices-drivers-and-formats
         def to(formato)
           modelo_generico(:tipo => formato)
         end
-        
+
         # Responsável por setar os valores necessários no template genérico
         # Retorna um stream pronto para gravaçào
         #
@@ -43,7 +43,7 @@ module Brcobranca
           doc.define_tags do
             tag :grande, :size => 13
           end
-          
+
           # Busca logo automaticamente
           logo = monta_logo
 
@@ -57,8 +57,8 @@ module Brcobranca
           doc.show self.codigo_barras.linha_digitavel, :tag => :grande
           doc.moveto :x => '0.7 cm' , :y => '23 cm'
           doc.show self.cedente
-          doc.moveto :x => '11 cm' , :y => '23 cm'
-          doc.show "#{self.agencia}-#{self.agencia_dv}/#{self.conta_corrente}-#{self.conta_corrente_dv}"
+          doc.moveto :x => '10 cm' , :y => '23 cm'
+          doc.show "#{self.agencia}-#{self.agencia_dv}/#{self.codigo_cedente}"
           doc.moveto :x => '14.2 cm' , :y => '23 cm'
           doc.show self.especie
           doc.moveto :x => '15.7 cm' , :y => '23 cm'
@@ -149,3 +149,4 @@ module Brcobranca
     end
   end
 end
+

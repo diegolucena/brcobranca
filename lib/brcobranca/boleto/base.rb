@@ -66,7 +66,7 @@ module Brcobranca
       # Responsável por definir dados iniciais quando se cria uma nova intância da classe Base.
       def initialize(campos={})
         padrao = { :moeda => "9", :data_documento => Date.today, :dias_vencimento => 1, :quantidade => 1,
-          :especie_documento => "DM", :especie => "R$", :aceite => "S", :valor => 0.0, 
+          :especie_documento => "DM", :especie => "R$", :aceite => "S", :valor => 0.0,
           :local_pagamento => "QUALQUER BANCO ATÉ O VENCIMENTO"}
 
           campos = padrao.merge!(campos)
@@ -98,6 +98,11 @@ module Brcobranca
         # Número sequencial utilizado para distinguir os boletos na agência
         def nosso_numero
           self.numero_documento
+        end
+
+        # Código cedente genérica no caso a conta corrente, mas há casos que o banco fornece um código especifico
+        def codigo_cedente
+          "#{self.conta_corrente}-#{self.conta_corrente_dv}"
         end
 
         # Retorna o valor total do documento: <b>quantidate * valor</b> ou <b>zero(0)</b> caso não consiga efetuar o cálculo.
@@ -139,10 +144,11 @@ module Brcobranca
         end
 
         # Responsável por montar uma String com 43 caracteres que será usado na criação do código de barras
-        #  Este metodo precisa ser reescrito para cada classe de boleto a ser criada. 
+        #  Este metodo precisa ser reescrito para cada classe de boleto a ser criada.
         def monta_codigo_43_digitos
           "Sobreescreva este método na classe referente ao banco que você esta criando"
         end
       end
     end
   end
+
