@@ -19,7 +19,7 @@ module Brcobranca
         # Gera o boleto em usando o formato desejado [:pdf, :jpg, :tif, :png, :ps, :laserjet, ... etc]
         #  Veja mais formatos na documentação do rghost: http://wiki.github.com/shairontoledo/rghost/supported-devices-drivers-and-formats
         def to(formato)
-          modelo_generico(:tipo => formato)
+            modelo_generico(:tipo => formato)
         end
 
         # Responsável por setar os valores necessários no template genérico
@@ -58,7 +58,7 @@ module Brcobranca
           doc.moveto :x => '0.7 cm' , :y => '23 cm'
           doc.show self.cedente
           doc.moveto :x => '10 cm' , :y => '23 cm'
-          doc.show "#{self.agencia}-#{self.agencia_dv}/#{self.codigo_cedente}"
+          doc.show self.agencia_codigo_cedente
           doc.moveto :x => '14.2 cm' , :y => '23 cm'
           doc.show self.especie
           doc.moveto :x => '15.7 cm' , :y => '23 cm'
@@ -93,7 +93,7 @@ module Brcobranca
           doc.moveto :x => '0.7 cm' , :y => '15.2 cm'
           doc.show self.cedente if self.cedente
           doc.moveto :x => '16.5 cm' , :y => '15.2 cm'
-          doc.show "#{self.agencia}-#{self.agencia_dv}/#{self.conta_corrente}-#{self.conta_corrente_dv}"
+          doc.show self.agencia_codigo_cedente
           doc.moveto :x => '0.7 cm' , :y => '14.4 cm'
           doc.show self.data_documento.to_s_br if self.data_documento
           doc.moveto :x => '4.2 cm' , :y => '14.4 cm'

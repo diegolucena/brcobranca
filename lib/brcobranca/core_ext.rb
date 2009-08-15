@@ -24,7 +24,7 @@ module Brcobranca
       when 14 then self.to_br_cnpj
       else
         self
-      end     
+      end
     end
 
     # Remove caracteres que não sejam numéricos do tipo MOEDA
@@ -54,9 +54,9 @@ module Brcobranca
       return (("0" * diferenca) + valor_inicial )
     end
 
-    # Monta a linha digitável padrão para todos os bancos segundo a BACEN. 
-    # Retorna + nil + para Codigo de Barras em branco, 
-    # Codigo de Barras com tamanho diferente de 44 dígitos e 
+    # Monta a linha digitável padrão para todos os bancos segundo a BACEN.
+    # Retorna + nil + para Codigo de Barras em branco,
+    # Codigo de Barras com tamanho diferente de 44 dígitos e
     # Codigo de Barras que não tenham somente caracteres numéricos.
     #   A linha digitável será composta por cinco campos:
     #   1º campo
@@ -117,7 +117,7 @@ module Brcobranca
       valor == 10 ? 0 : valor
     end
 
-    # Método padrão para cálculo de módulo 11 com multiplicaroes de 9 a 2 segundo a BACEN. 
+    # Método padrão para cálculo de módulo 11 com multiplicaroes de 9 a 2 segundo a BACEN.
     # Usado no DV do Nosso Numero, Agência e Cedente.
     #  Retorna + nil + para todos os parametros que nao forem String
     #  Retorna + nil + para String em branco
@@ -138,7 +138,7 @@ module Brcobranca
       return (total % 11 )
     end
 
-    # Método padrão para cálculo de módulo 11 com multiplicaroes de 2 a 9 segundo a BACEN. 
+    # Método padrão para cálculo de módulo 11 com multiplicaroes de 2 a 9 segundo a BACEN.
     # Usado no DV do Código de Barras.
     #  Retorna + nil + para todos os parametros que não forem String
     #  Retorna + nil + para String em branco
@@ -174,7 +174,44 @@ module Brcobranca
       valor == 10 ? 0 : valor
     end
 
-    # Soma números inteiros positivos com 2 dígitos ou mais 
+    # Retorna string que representa o dois dígitos verificadores para o campo livre segundo o banespa
+    def modulo11_2to7_banespa
+      valor = self.kind_of?(String) ? self : self.to_s
+      return nil if (valor !~ /\S/)
+      dv1 = valor.modulo10 #dv 1 inicial
+      dv2 = nil
+      multiplicadores = [2,3,4,5,6,7]
+      begin
+        recalcular_dv2 = false
+        valor_inicial = "#{valor}#{dv1}"
+        total = 0
+        multiplicador_posicao = 0
+
+        valor_inicial.split(//).reverse!.each do |caracter|
+          multiplicador_posicao = 0 if (multiplicador_posicao == 6)
+          total += (caracter.to_i * multiplicadores[multiplicador_posicao])
+          multiplicador_posicao += 1
+        end
+
+        case total % 11
+        when 0 then
+            dv2 = 0
+        when 1 then
+            if dv1 == 9
+              dv1 = 0
+            else
+              dv1 += 1
+            end
+            recalcular_dv2 = true
+        else
+            dv2 = 11 - (total % 11)
+        end
+      end while(recalcular_dv2)
+
+      return "#{dv1}#{dv2}"
+    end
+
+    # Soma números inteiros positivos com 2 dígitos ou mais
     # Retorna <b>0(zero)</b> caso seja impossível.
     #  Ex. 1 = 1
     #  Ex. 11 = (1+1) = 2
@@ -231,7 +268,7 @@ module Brcobranca
       self.strftime('%d/%m/%Y')
     end
     # Retorna string contendo número de dias julianos:
-    #  O cálculo é feito subtraindo-se a data atual, pelo último dia válido do ano anterior, 
+    #  O cálculo é feito subtraindo-se a data atual, pelo último dia válido do ano anterior,
     #  acrescentando-se o último algarismo do ano atual na quarta posição.
     #  Deve retornar string com 4 digitos.
     #  Ex. Data atual = 11/02/2009
@@ -267,3 +304,4 @@ end
 class Date #:nodoc:[all]
   include Brcobranca::CalculoData
 end
+

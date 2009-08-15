@@ -21,7 +21,7 @@ class TestBancoBanespa < Test::Unit::TestCase #:nodoc:[all]
     @boleto_novo.numero_documento = "0004952"
     @boleto_novo.data_documento = Date.parse("2001-08-01")
     @boleto_novo.dias_vencimento = 0
-    @boleto_novo.codigo_do_cedente = 14813026478
+    @boleto_novo.convenio = 14813026478
   end
 
   def boleto_nil
@@ -57,17 +57,16 @@ class TestBancoBanespa < Test::Unit::TestCase #:nodoc:[all]
     assert_equal 6, @boleto_novo.nosso_numero_dv
     @boleto_novo.numero_documento = "403005"
     assert_equal 6, @boleto_novo.nosso_numero_dv
+    @boleto_novo.numero_documento = 403005
+    assert_equal 6, @boleto_novo.nosso_numero_dv
     @boleto_novo.numero_documento = "1234567"
     assert_equal 8, @boleto_novo.nosso_numero_dv
-    @boleto_novo.agencia = "123"
+    @boleto_novo.numero_documento = "7469108"
+    assert_equal 1, @boleto_novo.nosso_numero_dv
+    @boleto_novo.numero_documento = "7469105"
     assert_equal 0, @boleto_novo.nosso_numero_dv
   end
 
-  def test_should_mont_correct_campo_livre_com_dv1_e_dv2
-    @boleto_novo.codigo_do_cedente = "40013012168"
-    @boleto_novo.numero_documento = "7469108"
-    assert_equal "4001301216874691080003384", @boleto_novo.campo_livre_com_dv1_e_dv2
-  end
 
   def test_should_mont_correct_codigo_barras
     boleto_1

@@ -131,7 +131,7 @@ class TestCoreExt < Test::Unit::TestCase #:nodoc:[all]
     assert_equal 5, "5444".modulo11_9to2
     assert_equal 3, "01129004590".modulo11_9to2
     assert_equal 10, "15735".modulo11_9to2
-    assert_equal 0, "777700168".modulo11_9to2  
+    assert_equal 0, "777700168".modulo11_9to2
     assert_equal 3, "77700168".modulo11_9to2
     assert_equal 2, "00015448".modulo11_9to2
     assert_equal 2, "15448".modulo11_9to2
@@ -173,6 +173,13 @@ class TestCoreExt < Test::Unit::TestCase #:nodoc:[all]
     assert_equal 6, "3419166700000123451101234567880057123457000".modulo11_2to9
     assert_equal 3, 19373700000001000500940144816060680935031.modulo11_2to9
     assert_kind_of( Fixnum, 19373700000001000500940144816060680935031.modulo11_2to9 )
+  end
+
+  def test_should_calculate_correct_modulo11_2to7_banespa
+    assert_equal "84", "40013012168746910800033".modulo11_2to7_banespa
+    assert_equal "84", 40013012168746910800033.modulo11_2to7_banespa
+    assert_kind_of String , 40013012168746910800033.modulo11_2to7_banespa
+    assert_kind_of String , "40013012168746910800033".modulo11_2to7_banespa
   end
 
   def test_should_calculate_correct_addiction_of_numbers
@@ -225,3 +232,4 @@ class TestCoreExt < Test::Unit::TestCase #:nodoc:[all]
   end
 
 end
+

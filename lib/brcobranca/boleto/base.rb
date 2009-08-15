@@ -100,9 +100,9 @@ module Brcobranca
           self.numero_documento
         end
 
-        # Código cedente genérica no caso a conta corrente, mas há casos que o banco fornece um código especifico
-        def codigo_cedente
-          "#{self.conta_corrente}-#{self.conta_corrente_dv}"
+        # String que preechera o campo agencia/codigo cedente no boleto
+        def agencia_codigo_cedente
+          "#{self.agencia}-#{self.agencia_dv}/#{self.conta_corrente}-#{self.conta_corrente_dv}"
         end
 
         # Retorna o valor total do documento: <b>quantidate * valor</b> ou <b>zero(0)</b> caso não consiga efetuar o cálculo.
